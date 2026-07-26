@@ -20,6 +20,6 @@ In `ingestion/parsers/resume_parser.py`, `_detect_sections()` looks for resume h
 
 **Branch name:** fix/147-resume-section-whitespace
 
-**Setup confirmation:** [ ] App runs locally at localhost:5173
+**Setup confirmation:** [x] App runs locally at localhost:5173
 
 **Cohort ledger:** [ ] Issue added to cohort ledger
