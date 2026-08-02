@@ -23,3 +23,17 @@ In `ingestion/parsers/resume_parser.py`, `_detect_sections()` looks for resume h
 **Setup confirmation:** [x] App runs locally at localhost:5173
 
 **Cohort ledger:** [ ] Issue added to cohort ledger
+
+## Week 8 — Reproduction & solution planning
+
+**Reproduction commit link:** https://github.com/Justraymond99/pathreview/commit/2982c4cc9c83c000af32c08a353e02ca2c0fd819
+
+**Reproduction summary:**
+I reproduced issue #147 by parsing resume text whose `Education:` and `Skills:` headers have four leading spaces. `_detect_sections()` returned an empty list because its regular expressions require the section name to appear immediately at the start of a line or immediately after a newline.
+
+**PLAN.md link:** https://github.com/Justraymond99/pathreview/blob/fix/147-resume-section-whitespace/PLAN.md
+
+**Walkthrough video (recommended):** Not recorded yet.
+
+**Blockers or open questions:**
+The main implementation risk is allowing indentation without making the regex so permissive that it matches section words inside ordinary prose. I also need to avoid using unrestricted `\s*` before headers because it may consume newline characters; `[ \t]*` is the safer candidate for horizontal indentation. Output ordering is currently nondeterministic because `SECTION_HEADERS` and the final de-duplication both use sets, but deterministic ordering appears outside the scope of issue #147.
