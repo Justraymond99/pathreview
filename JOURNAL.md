@@ -37,3 +37,34 @@ I reproduced issue #147 by parsing resume text whose `Education:` and `Skills:` 
 
 **Blockers or open questions:**
 The main implementation risk is allowing indentation without making the regex so permissive that it matches section words inside ordinary prose. I also need to avoid using unrestricted `\s*` before headers because it may consume newline characters; `[ \t]*` is the safer candidate for horizontal indentation. Output ordering is currently nondeterministic because `SECTION_HEADERS` and the final de-duplication both use sets, but deterministic ordering appears outside the scope of issue #147.
+
+## Week 9 — Solution building & PR submission
+
+### Check-in 1 (mid-week)
+
+**Current progress:**
+Implemented the `_detect_sections()` fix using a single multiline regular expression that allows leading spaces or tabs while keeping section names anchored to the beginning of a logical line. Added focused regression tests for space-indented and tab-indented headers, same-line section content such as `Skills: Python`, and a negative prose case. Opened a draft PR in my fork so the diff can be reviewed while final validation is completed.
+
+**Next steps:**
+Run the focused resume parser tests, then `make test-unit` and `make check`. Document any pre-existing failures, request peer or mentor feedback on the draft PR, address relevant feedback, open the final PR against the upstream `pathreview` repository, and complete Check-in 2 with the submitted PR link.
+
+**Blockers:**
+The connected GitHub integration can update my fork but cannot open the cross-repository PR against `ascherj/pathreview`, so that final upstream PR step may need to be completed manually in GitHub after validation.
+
+---
+
+### Check-in 2 (end of week)
+
+**PR link:** [link to your submitted pull request]
+
+**Branch:** fix/147-resume-section-whitespace
+
+**What you built:**
+[1–3 sentences summarizing what your fix does and how it works]
+
+**Tests added or updated:**
+[Which test files did you touch? What do they cover?]
+
+**Self-review confirmation:** [ ] make check passes  [ ] make test-unit passes
+
+**Draft PR feedback received from:** [name or Slack handle, or "none"]
