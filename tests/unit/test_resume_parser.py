@@ -143,6 +143,33 @@ class TestResumeParser:
         assert any("education" in s for s in sections_lower)
         assert any("skills" in s for s in sections_lower)
 
+    def test_detect_sections_with_leading_spaces(self, parser):
+        """Detect section headers that are indented with spaces."""
+        text = """
+            Education:
+            B.S. Computer Science
+
+            Skills: Python, JavaScript
+        """
+        sections = {section.lower() for section in parser._detect_sections(text)}
+
+        assert "education" in sections
+        assert "skills" in sections
+
+    def test_detect_sections_with_leading_tabs(self, parser):
+        """Detect section headers that are indented with tabs."""
+        text = "\tEducation:\nDegree details\n\tSkills: Python"
+        sections = {section.lower() for section in parser._detect_sections(text)}
+
+        assert "education" in sections
+        assert "skills" in sections
+
+    def test_detect_sections_does_not_match_prose(self, parser):
+        """Do not detect section words embedded in ordinary prose."""
+        text = "My skills include Python and my experience includes backend development."
+
+        assert parser._detect_sections(text) == []
+
     def test_strip_markdown_syntax(self, parser):
         """Test markdown syntax stripping."""
         markdown_text = """

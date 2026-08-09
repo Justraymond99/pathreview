@@ -127,20 +127,10 @@ class ResumeParser(BaseParser):
     def _detect_sections(self, text: str) -> list[str]:
         """Detect common resume sections from text."""
         detected = []
-        text_lower = text.lower()
 
         for section in SECTION_HEADERS:
-            # Look for section header patterns
-            patterns = [
-                rf"^{re.escape(section)}\s*$",
-                rf"^{re.escape(section)}\s*[:|-]",
-                rf"\n{re.escape(section)}\s*$",
-                rf"\n{re.escape(section)}\s*[:|-]",
-            ]
-
-            for pattern in patterns:
-                if re.search(pattern, text_lower, re.MULTILINE):
-                    detected.append(section.title())
-                    break
+            pattern = rf"^[ \t]*{re.escape(section)}[ \t]*(?:[:|-]|$)"
+            if re.search(pattern, text, re.MULTILINE | re.IGNORECASE):
+                detected.append(section.title())
 
         return list(set(detected))  # Remove duplicates
