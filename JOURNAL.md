@@ -55,15 +55,15 @@ The connected GitHub integration can update my fork but cannot open the cross-re
 
 ### Check-in 2 (end of week)
 
-**PR link:** [link to your submitted pull request]
+**PR link:** [link to your submitted upstream pull request]
 
 **Branch:** fix/147-resume-section-whitespace
 
 **What you built:**
-[1–3 sentences summarizing what your fix does and how it works]
+Updated `ResumeParser._detect_sections()` to detect known resume headers after optional leading spaces or tabs using one multiline, case-insensitive regex per section. The match remains anchored to the beginning of each logical line and still accepts bare headers or the existing `:`, `|`, and `-` separators without matching section words embedded in ordinary prose.
 
 **Tests added or updated:**
-[Which test files did you touch? What do they cover?]
+Updated `tests/unit/test_resume_parser.py` with regression tests for four-space indentation, tab indentation, same-line content such as `Skills: Python`, and a negative test ensuring ordinary prose containing words such as “skills” and “experience” is not treated as a section header.
 
 **Self-review confirmation:** [ ] make check passes  [ ] make test-unit passes
 
